@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "769732205125",
+    "firebase_url": "https://onmessenger-c20db.firebaseio.com",
+    "project_id": "onmessenger-c20db",
+    "storage_bucket": "onmessenger-c20db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769732205125:android:7daee3d7a2a9a96c",
+        "android_client_info": {
+          "package_name": "com.jxw.onmessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "769732205125-ucfftppgf51n0uvlsq30t8gn1v4n9fi3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jxw.onmessenger",
+            "certificate_hash": "f886d4f747ec01bb5da01cca388c8107c619fd88"
+          }
+        },
+        {
+          "client_id": "769732205125-3t7ahpk0tu8o5snetfm5e09kdio703kl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9fEsrLnQpxMLWSJGLu0Wokx5pWbswT40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "769732205125-3t7ahpk0tu8o5snetfm5e09kdio703kl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
