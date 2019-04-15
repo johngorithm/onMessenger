@@ -26,6 +26,17 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
+    View.OnClickListener registerClickListener = view -> {
+        String email = emailInputField.getText().toString();
+        String password = passwordInputField.getText().toString();
+
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+            registerNewUser(email, password);
+        } else {
+            Toast.makeText(RegisterActivity.this,
+                    "Empty Field Submitted", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +45,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         initalizeViews();
         firebaseAuth = FirebaseAuth.getInstance();
-        alreadyHaveAccountLink.setOnClickListener(view -> {
-            Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(loginIntent);
-        });
+        alreadyHaveAccountLink.setOnClickListener(view -> goToLogin());
         registerButton.setOnClickListener(registerClickListener);
     }
 
-    View.OnClickListener registerClickListener = view -> {
-        String email = emailInputField.getText().toString();
-        String password = passwordInputField.getText().toString();
-
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-            registerNewUser(email, password);
-        } else {
-            Toast.makeText(RegisterActivity.this, "Empty Field Submitted", Toast.LENGTH_SHORT).show();
-        }
-    };
+    private void goToLogin() {
+        Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(loginIntent);
+    }
 
     private void registerNewUser(String email, String password) {
         progressDialog.setTitle("Creating New Account");
@@ -58,18 +60,26 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.show();
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
+                            String userEmail = task.getResult().getUser().getEmail();
                             Toast.makeText(RegisterActivity.this,
-                                    "Account Successfully Created",
+                                    "Account Successfully Created" + userEmail,
                                     Toast.LENGTH_SHORT).show();
+                            goToLogin();
                         } else {
                             progressDialog.dismiss();
-                            String message = task.getException().getMessage();
-                            Toast.makeText(RegisterActivity.this, "Error: "+message, Toast.LENGTH_SHORT).show();
+                            if (task.getException() != null) {
+                                String message = task.getException().getMessage();
+                                Toast.makeText(RegisterActivity.this,
+                                        "Error: "+message, Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    });
+                    }
+                });
     }
 
     private void initalizeViews() {
@@ -80,5 +90,6 @@ public class RegisterActivity extends AppCompatActivity {
         alreadyHaveAccountLink = findViewById(R.id.already_have_account_link);
 
         progressDialog = new ProgressDialog(RegisterActivity.this);
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 }
