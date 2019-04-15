@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.jxw.onmessenger.MainActivity;
 import com.jxw.onmessenger.R;
 import com.jxw.onmessenger.login.LoginActivity;
 
@@ -69,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this,
                                     "Account Successfully Created" + userEmail,
                                     Toast.LENGTH_SHORT).show();
-                            goToLogin();
+                            goToMainActivity();
                         } else {
                             progressDialog.dismiss();
                             if (task.getException() != null) {
@@ -80,6 +81,13 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void goToMainActivity() {
+        Intent mainActivityIntent = new Intent(RegisterActivity.this, MainActivity.class);
+        mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainActivityIntent);
+        finish();
     }
 
     private void initalizeViews() {
