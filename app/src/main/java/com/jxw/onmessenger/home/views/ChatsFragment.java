@@ -1,4 +1,4 @@
-package com.jxw.onmessenger.views;
+package com.jxw.onmessenger.home.views;
 
 
 import android.os.Bundle;

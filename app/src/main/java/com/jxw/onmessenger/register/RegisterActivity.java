@@ -16,9 +16,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.jxw.onmessenger.MainActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.jxw.onmessenger.home.views.MainActivity;
 import com.jxw.onmessenger.R;
 import com.jxw.onmessenger.login.LoginActivity;
+import com.jxw.onmessenger.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText emailInputField, passwordInputField;
@@ -26,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView alreadyHaveAccountLink;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
+    private DatabaseReference firebaseDatabaseRef;
 
     View.OnClickListener registerClickListener = view -> {
         String email = emailInputField.getText().toString();
@@ -43,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         initalizeViews();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -66,9 +71,11 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
-                            String userEmail = task.getResult().getUser().getEmail();
+
+                            saveUserData();
+
                             Toast.makeText(RegisterActivity.this,
-                                    "Account Successfully Created" + userEmail,
+                                    "Account Successfully Created",
                                     Toast.LENGTH_SHORT).show();
                             goToMainActivity();
                         } else {
@@ -81,6 +88,12 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void saveUserData() {
+        String userId = firebaseAuth.getCurrentUser().getUid();
+        User newUser = new User(userId, "", "");
+        firebaseDatabaseRef.child("Users").child(userId).setValue(newUser);
     }
 
     private void goToMainActivity() {

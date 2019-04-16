@@ -1,13 +1,13 @@
-package com.jxw.onmessenger.adapters;
+package com.jxw.onmessenger.home.adapters;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.jxw.onmessenger.views.ChatsFragment;
-import com.jxw.onmessenger.views.ContactsFragment;
-import com.jxw.onmessenger.views.GroupsFragment;
+import com.jxw.onmessenger.home.views.ChatsFragment;
+import com.jxw.onmessenger.home.views.ContactsFragment;
+import com.jxw.onmessenger.home.views.GroupsFragment;
 
 public class TabAccessAdapter extends FragmentPagerAdapter {
     public TabAccessAdapter(FragmentManager fm) {
