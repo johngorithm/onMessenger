@@ -7,4 +7,5 @@
     <string name="find_friends">Find Friends</string>
     <string name="logout">Logout</string>
     <string name="title_activity_temp_settings">TempSettings</string>
+    <string name="new_group">New Group</string>
 </resources>

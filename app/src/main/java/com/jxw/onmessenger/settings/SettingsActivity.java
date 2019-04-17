@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +26,6 @@ import com.jxw.onmessenger.home.views.MainActivity;
 import com.jxw.onmessenger.R;
 import com.jxw.onmessenger.models.User;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -102,6 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
         progressDialog.setMessage("Please wait ...");
         progressDialog.show();
 
+
         String userId = currentUser.getUid();
         User user = new User(userId, username, status);
         Map<String, Object> updates = user.toMap();
@@ -113,6 +112,9 @@ public class SettingsActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
                             Toast.makeText(SettingsActivity.this, "Update is successful", Toast.LENGTH_SHORT).show();
+                            if (getIntent().getFlags() == Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_NEW_TASK){
+                                goToMainActivity();
+                            }
                         } else {
                             progressDialog.dismiss();
                             if (task.getException() != null) {
@@ -125,6 +127,13 @@ public class SettingsActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void goToMainActivity() {
+        Intent mainActivityIntent = new Intent(SettingsActivity.this, MainActivity.class);
+        mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainActivityIntent);
+        finish();
     }
 
     private void initializeFields() {

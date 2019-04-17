@@ -7,12 +7,17 @@
         app:showAsAction="never"
         android:id="@+id/option_find_friends"
         />
+    <item
+        android:id="@+id/option_create_group"
+        android:title="@string/new_group"
+        app:showAsAction="never" />
 
     <item
         android:title="@string/settings"
         app:showAsAction="never"
         android:id="@+id/option_settings"
         />
+
     <item
         android:id="@+id/option_log_out"
         android:title="@string/logout"
