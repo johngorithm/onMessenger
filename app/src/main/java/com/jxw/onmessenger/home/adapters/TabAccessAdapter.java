@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.jxw.onmessenger.home.views.ChatsFragment;
 import com.jxw.onmessenger.home.views.ContactsFragment;
-import com.jxw.onmessenger.home.views.GroupsFragment;
+import com.jxw.onmessenger.home.group.GroupsFragment;
 
 public class TabAccessAdapter extends FragmentPagerAdapter {
     public TabAccessAdapter(FragmentManager fm) {

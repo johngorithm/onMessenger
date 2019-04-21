@@ -10,12 +10,24 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class User {
-    public String uid;
-    public String username;
-    public String statusInfo;
+    private String uid;
+    private String username;
+    private String statusInfo;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getStatusInfo() {
+        return statusInfo;
+    }
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
+    }
+
+    public String getUid() {
+        return uid;
     }
 
     public User(String uid, @Nullable String username, @Nullable String status) {

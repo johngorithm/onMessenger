@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.jxw.onmessenger.models.Group;
 import com.jxw.onmessenger.services.FirebaseService;
 
 
@@ -50,8 +51,9 @@ public class HomePresenter {
 
     public void createNewGroup(String groupName){
         String newGroupKey = fbRootRef.child("Groups").push().getKey();
+        Group newGroup = new Group(newGroupKey, "", groupName, "", 0);
 
-        fbRootRef.child("Groups").child(newGroupKey).setValue(groupName)
+        fbRootRef.child("Groups").child(newGroupKey).setValue(newGroup)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

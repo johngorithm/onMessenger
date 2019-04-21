@@ -81,8 +81,8 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                usernameInput.setText(user.username);
-                statusInput.setText(user.statusInfo);
+                usernameInput.setText(user.getUsername());
+                statusInput.setText(user.getStatusInfo());
                 progressDialog.dismiss();
             }
 
