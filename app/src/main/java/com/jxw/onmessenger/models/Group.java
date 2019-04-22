@@ -15,16 +15,24 @@ public class Group {
     private String groupName;
     private String lastMessage;
     private int newMessageCount;
+    private Map<String, String> members;
 
     public Group() {
 
     }
-    public Group(String uid, @Nullable String groupImage, String groupName, @Nullable  String lastMessage, @Nullable int newMessageCount) {
+
+    public Group(String uid, @Nullable String groupImage, String groupName, @Nullable  String lastMessage, @Nullable int newMessageCount,
+                 @Nullable Map<String, String> members) {
         this.groupImage = groupImage;
         this.groupName = groupName;
         this.lastMessage = lastMessage;
         this.newMessageCount = newMessageCount;
         this.uid = uid;
+        this.members = members;
+    }
+
+    public Map<String, String> getMembers() {
+        return members;
     }
 
     public String getUid() {

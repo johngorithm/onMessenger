@@ -14,6 +14,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.jxw.onmessenger.models.Group;
 import com.jxw.onmessenger.services.FirebaseService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class HomePresenter {
     private HomeView homeView;
@@ -51,7 +54,9 @@ public class HomePresenter {
 
     public void createNewGroup(String groupName){
         String newGroupKey = fbRootRef.child("Groups").push().getKey();
-        Group newGroup = new Group(newGroupKey, "", groupName, "", 0);
+        Map<String, String> member = new HashMap<>();
+        member.put(currentUser.getUid(), "true");
+        Group newGroup = new Group(newGroupKey, "", groupName, "", 0, member);
 
         fbRootRef.child("Groups").child(newGroupKey).setValue(newGroup)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
