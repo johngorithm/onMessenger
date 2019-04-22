@@ -42,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
         String status = statusInput.getText().toString();
 
         if (!TextUtils.isEmpty(username)) {
-            updateProfile(username, status);
+            updateProfile(username, status, null);
         } else {
             Toast.makeText(SettingsActivity.this,
                     "Username is required", Toast.LENGTH_SHORT).show();
@@ -95,14 +95,14 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void updateProfile(String username, @Nullable String status) {
+    private void updateProfile(String username, @Nullable String status, @Nullable String displayPicture) {
         progressDialog.setTitle("Updating Profile");
         progressDialog.setMessage("Please wait ...");
         progressDialog.show();
 
 
         String userId = currentUser.getUid();
-        User user = new User(userId, username, status);
+        User user = new User(userId, username, status, displayPicture);
         Map<String, Object> updates = user.toMap();
 
         fbRootRef.child("Users").child(userId).updateChildren(updates)

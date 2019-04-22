@@ -1,7 +1,5 @@
 package com.jxw.onmessenger.models;
 
-import android.support.annotation.Nullable;
-
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -10,57 +8,56 @@ import java.util.HashMap;
 import java.util.Map;
 
 @IgnoreExtraProperties
-public class Group {
-
+public class Chat {
     private String uid;
-    private String imageUrl;
+    private String chatType;
     private String title;
-    private String lastMessage;
-    private int newMessageCount;
-    private Map<String, String> members;
+    private int memberLimit;
+    private String imageUrl;
+    private Message lastMessage;
     private long createdAt;
 
-    public Group() {
+    public Chat() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public Group(String uid, @Nullable String imageUrl, String title, @Nullable  String lastMessage, @Nullable int newMessageCount,
-                 Map<String, String> members) {
-        this.imageUrl = imageUrl;
-        this.title = title;
-        this.lastMessage = lastMessage;
-        this.newMessageCount = newMessageCount;
+    public Chat(String uid, String title, int memberLimit, String imageUrl, Message lastMessage,
+                String chatType) {
         this.uid = uid;
-        this.members = members;
+        this.title = title;
+        this.memberLimit = memberLimit;
+        this.imageUrl = imageUrl;
+        this.lastMessage = lastMessage;
+        this.chatType = chatType;
         this.createdAt = Calendar.getInstance().getTime().getTime();
-    }
-
-    public Map<String, String> getMembers() {
-        return members;
     }
 
     public String getUid() {
         return uid;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getChatType() {
+        return chatType;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public long getCreatedAt() {
-        return createdAt;
+    public int getMemberLimit() {
+        return memberLimit;
     }
 
-    public String getLastMessage() {
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Message getLastMessage() {
         return lastMessage;
     }
 
-    public int getNewMessageCount() {
-        return newMessageCount;
+    public long getCreatedAt() {
+        return createdAt;
     }
 
     @Exclude
@@ -68,10 +65,11 @@ public class Group {
         HashMap<String, Object> result = new HashMap<>();
 
         result.put("title", title);
+        result.put("memberLimit", memberLimit);
         result.put("imageUrl", imageUrl);
         result.put("lastMessage", lastMessage);
-        result.put("newMessageCount", newMessageCount);
 
         return result;
     }
+
 }

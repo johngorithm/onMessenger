@@ -38,7 +38,7 @@ public class GroupAdapter  extends RecyclerView.Adapter<GroupAdapter.GroupViewHo
     public void onBindViewHolder(@NonNull GroupViewHolder groupViewHolder, int position) {
         Group group = groups.get(position);
         String groupId = group.getUid();
-        String groupName = group.getGroupName();
+        String groupName = group.getTitle();
 
         groupViewHolder.groupName.setText(groupName);
         groupViewHolder.groupItemCard.setOnClickListener( view -> {

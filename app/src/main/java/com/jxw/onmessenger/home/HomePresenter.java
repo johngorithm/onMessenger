@@ -52,18 +52,18 @@ public class HomePresenter {
         });
     }
 
-    public void createNewGroup(String groupName){
+    public void createNewGroup(String title){
         String newGroupKey = fbRootRef.child("Groups").push().getKey();
         Map<String, String> member = new HashMap<>();
         member.put(currentUser.getUid(), "true");
-        Group newGroup = new Group(newGroupKey, "", groupName, "", 0, member);
+        Group newGroup = new Group(newGroupKey, "", title, "", 0, member);
 
         fbRootRef.child("Groups").child(newGroupKey).setValue(newGroup)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            homeView.onGroupCreationSuccess(groupName);
+                            homeView.onGroupCreationSuccess(title);
                         } else {
                             if (task.getException() != null) {
                                 String errorMsg = task.getException().getMessage();

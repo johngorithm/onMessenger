@@ -48,7 +48,7 @@ public class RegisterPresenter {
     }
 
     private void saveUserData(String userId) {
-        User newUser = new User(userId, null, null);
+        User newUser = new User(userId, null, null, null);
         fbRootRef.child("Users").child(userId).setValue(newUser);
     }
 }
