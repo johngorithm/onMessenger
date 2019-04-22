@@ -13,23 +13,16 @@
         >
     </include>
 
-    <ScrollView
-        android:id="@+id/group_chat_scroll_view"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/group_chat_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="10dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/group_chat_input_layout"
         app:layout_constraintTop_toBottomOf="@+id/group_chat_bar_layout"
-        tools:layout_editor_absoluteX="16dp">
+        tools:layout_editor_absoluteX="0dp">
 
-        <android.support.v7.widget.RecyclerView
-            android:scrollbars="vertical"
-            android:id="@+id/group_chat_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-        </android.support.v7.widget.RecyclerView>
-    </ScrollView>
+    </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/group_chat_input_layout"

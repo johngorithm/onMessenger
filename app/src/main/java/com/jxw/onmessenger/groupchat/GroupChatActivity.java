@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.jxw.onmessenger.R;
@@ -18,13 +21,23 @@ import java.util.List;
 public class GroupChatActivity extends AppCompatActivity implements GroupChatView {
     private Toolbar groupChatToolbar;
     private ImageButton sendBtn;
-    private ScrollView chatScrollView;
+    private EditText messageInputField;
 
     private RecyclerView groupChatRecyclerView;
     private GroupChatPresenter groupChatPresenter;
     private String groupId;
     private ProgressDialog progressDialog;
 
+    private View.OnClickListener sendBtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String message = messageInputField.getText().toString();
+            if (!TextUtils.isEmpty(message)) {
+                messageInputField.setText("");
+                groupChatPresenter.sendMessage(message, groupId);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +46,8 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatVie
 
         initializeProperties();
         initiateNetworkRequest();
+
+        sendBtn.setOnClickListener(sendBtnClickListener);
     }
 
     private void initiateNetworkRequest() {
@@ -43,7 +58,7 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatVie
     private void initializeProperties() {
         groupChatToolbar = findViewById(R.id.group_chat_bar_layout);
         sendBtn = findViewById(R.id.group_chat_send_button);
-        chatScrollView = findViewById(R.id.group_chat_scroll_view);
+        messageInputField = findViewById(R.id.group_chat_input_field);
         groupChatRecyclerView = findViewById(R.id.group_chat_recycler_view);
 
         setSupportActionBar(groupChatToolbar);
@@ -84,6 +99,8 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatVie
         if (messages != null && !messages.isEmpty() ) {
             GroupChatAdapter adapter = new GroupChatAdapter(this, messages);
             groupChatRecyclerView.setAdapter(adapter);
+        } else {
+            Log.d("GROUP_CHAT_ACTIVITY", "displayGroupChats: "+messages);
         }
     }
 }
