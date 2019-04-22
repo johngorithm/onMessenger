@@ -1,6 +1,7 @@
 package com.jxw.onmessenger.home.group;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jxw.onmessenger.R;
+import com.jxw.onmessenger.groupchat.GroupChatActivity;
 import com.jxw.onmessenger.models.Group;
 
 import java.util.List;
@@ -36,14 +38,17 @@ public class GroupAdapter  extends RecyclerView.Adapter<GroupAdapter.GroupViewHo
     public void onBindViewHolder(@NonNull GroupViewHolder groupViewHolder, int position) {
         Group group = groups.get(position);
         String groupId = group.getUid();
+        String groupName = group.getGroupName();
 
-        groupViewHolder.groupName.setText(group.getGroupName());
-        groupViewHolder.groupItemCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        groupViewHolder.groupName.setText(groupName);
+        groupViewHolder.groupItemCard.setOnClickListener( view -> {
+
                 Toast.makeText(context, groupId+" is clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+                Intent groupActivityIntent = new Intent(context, GroupChatActivity.class);
+            groupActivityIntent.putExtra("group_id", groupId);
+            groupActivityIntent.putExtra("group_name", groupName);
+                context.startActivity(groupActivityIntent);
+            });
     }
 
     @Override

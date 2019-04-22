@@ -8,4 +8,5 @@
     <string name="logout">Logout</string>
     <string name="title_activity_temp_settings">TempSettings</string>
     <string name="new_group">New Group</string>
+    <string name="message_input_hint">Message ...</string>
 </resources>

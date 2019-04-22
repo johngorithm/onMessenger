@@ -13,12 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".settings.SettingsActivity" android:parentActivityName=".home.views.MainActivity"/>
+        <activity android:name=".groupchat.GroupChatActivity"></activity>
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:parentActivityName=".home.views.MainActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".home.views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
