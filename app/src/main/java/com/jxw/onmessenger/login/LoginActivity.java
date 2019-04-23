@@ -2,7 +2,6 @@ package com.jxw.onmessenger.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,20 +11,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.jxw.onmessenger.home.views.MainActivity;
 import com.jxw.onmessenger.R;
 import com.jxw.onmessenger.register.RegisterActivity;
 
-public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth firebaseAuth;
+public class LoginActivity extends AppCompatActivity implements LoginView {
     private Button loginButton, phoneLoginButton;
     private EditText emailInputField, passwordInputField;
     private TextView forgetPasswordLink, notRegisteredLink;
     private ProgressDialog progressDialog;
+    private LoginPresenter loginPresenter;
 
     View.OnClickListener loginClickListener = view -> {
         String email = emailInputField.getText().toString();
@@ -43,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        firebaseAuth = FirebaseAuth.getInstance();
 
         initializeFields();
         notRegisteredLink.setOnClickListener(view -> sendUserToRegisterActivity());
@@ -55,28 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Please wait");
         progressDialog.show();
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            progressDialog.dismiss();
-                            Toast.makeText(LoginActivity.this,
-                                    "Login Successful", Toast.LENGTH_SHORT).show();
-                            gotToMainActivity();
-
-                        } else {
-                            progressDialog.dismiss();
-                            if (task.getException() != null) {
-                                String message = task.getException().getMessage();
-                                Toast.makeText(LoginActivity.this,
-                                        "Error: "+message, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
-
-
+        loginPresenter.authenticateUser(email, password);
     }
 
     private void gotToMainActivity() {
@@ -103,5 +76,23 @@ public class LoginActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setCanceledOnTouchOutside(false);
+
+        // PRESENTER
+        loginPresenter = new LoginPresenter(this);
+    }
+
+    @Override
+    public void onLoginSuccess() {
+        progressDialog.dismiss();
+        Toast.makeText(LoginActivity.this,
+                "Login Successful", Toast.LENGTH_SHORT).show();
+        gotToMainActivity();
+    }
+
+    @Override
+    public void handleError(String message) {
+        progressDialog.dismiss();
+        Toast.makeText(LoginActivity.this,
+                "Error: "+message, Toast.LENGTH_SHORT).show();
     }
 }

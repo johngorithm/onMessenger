@@ -3,10 +3,11 @@ package com.jxw.onmessenger.home.group;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class GroupsFragment extends Fragment implements GroupView{
     private RecyclerView groupsRecyclerView;
 
 
+
     public GroupsFragment() {
         // Required empty public constructor
     }
@@ -38,9 +40,13 @@ public class GroupsFragment extends Fragment implements GroupView{
         groupFragmentView =  inflater.inflate(R.layout.fragment_groups, container, false);
 
         initializeProperties();
-        groupListPresenter.fetchGroups();
-
         return groupFragmentView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        groupListPresenter.fetchGroups();
     }
 
     private void initializeProperties() {
@@ -50,15 +56,11 @@ public class GroupsFragment extends Fragment implements GroupView{
 
         groupListPresenter = new GroupPresenter(this);
         progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading Groups ...");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
     }
 
     @Override
     public void displayGroups(List<Group> groups) {
         progressDialog.dismiss();
-        Log.d("========>", "displayGroups: "+groups.size());
         GroupAdapter groupListAdapter = new GroupAdapter(getContext(), groups);
         groupsRecyclerView.setAdapter(groupListAdapter);
 
