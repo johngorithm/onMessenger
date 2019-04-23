@@ -33,7 +33,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:hint="email ..."
+                android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
                 android:drawableLeft="@drawable/email"
                 android:drawableStart="@drawable/email"/>
@@ -49,7 +49,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:hint="password ..."
+                android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:drawableLeft="@drawable/password"
                 android:drawableStart="@drawable/password"/>
@@ -61,7 +61,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:text="Create Account"
+                android:text="@string/create_account_text"
                 android:textSize="20sp"
                 android:padding="5dp"
                 android:textAllCaps="true"

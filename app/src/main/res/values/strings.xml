@@ -9,4 +9,9 @@
     <string name="title_activity_temp_settings">TempSettings</string>
     <string name="new_group">New Group</string>
     <string name="message_input_hint">Message ...</string>
+    <string name="create_account_text">Create Account</string>
+    <string name="password_hint">password ...</string>
+    <string name="email_hint">email ...</string>
+    <string name="sender_text">Deraviv</string>
+    <string name="message_text">Hi John, This is the last time I want warn you</string>
 </resources>

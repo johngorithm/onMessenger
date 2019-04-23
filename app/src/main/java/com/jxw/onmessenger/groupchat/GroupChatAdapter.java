@@ -13,6 +13,7 @@ import com.jxw.onmessenger.R;
 import com.jxw.onmessenger.models.Message;
 import com.jxw.onmessenger.models.User;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -42,10 +43,11 @@ public class GroupChatAdapter  extends RecyclerView.Adapter<GroupChatAdapter.Cha
         String senderUsername = sender.getUsername();
 
         Date chatTime = new Date(timeStamp);
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
 
         holder.chatMessage.setText(message);
         holder.chatSender.setText(senderUsername);
-        holder.chatTimeStamp.setText(chatTime.toString());
+        holder.chatTimeStamp.setText(sdf.format(chatTime));
 
         /**
          * TODO: implement swipe-to-reply functionality on the card view
