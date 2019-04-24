@@ -14,4 +14,5 @@
     <string name="email_hint">email ...</string>
     <string name="sender_text">Deraviv</string>
     <string name="message_text">Hi John, This is the last time I want warn you</string>
+    <string name="share_pref_key">SharePreferencesKey_78937</string>
 </resources>

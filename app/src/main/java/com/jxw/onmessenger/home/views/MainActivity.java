@@ -2,8 +2,10 @@ package com.jxw.onmessenger.home.views;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements HomeView {
     private FirebaseUser currentUser;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
+    private SharedPreferences localStore;
 
 
     @Override
@@ -68,7 +71,8 @@ public class MainActivity extends AppCompatActivity implements HomeView {
         mainTabLayout = findViewById(R.id.main_tabs);
         // PRESENTER
         homePresenter = new HomePresenter(this);
-
+        // Share Preferences
+        localStore = getSharedPreferences(getString(R.string.share_pref_key), Context.MODE_PRIVATE);
     }
 
 
@@ -150,8 +154,7 @@ public class MainActivity extends AppCompatActivity implements HomeView {
                 launchSettingsActivity();
                 return true;
             case R.id.option_log_out:
-                firebaseAuth.signOut();
-                sendUserToLoginActivity();
+                signOut();
                 return true;
             case R.id.option_create_group:
                 requestNewGroup();
@@ -159,6 +162,14 @@ public class MainActivity extends AppCompatActivity implements HomeView {
             default:
                 return false;
         }
+    }
+
+    private void signOut() {
+        SharedPreferences.Editor editor = localStore.edit();
+        editor.clear();
+        editor.apply();
+        firebaseAuth.signOut();
+        sendUserToLoginActivity();
     }
 
     private void requestNewGroup() {

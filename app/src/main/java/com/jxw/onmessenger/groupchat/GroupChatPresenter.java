@@ -1,5 +1,8 @@
 package com.jxw.onmessenger.groupchat;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -10,9 +13,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.jxw.onmessenger.R;
 import com.jxw.onmessenger.models.Message;
 import com.jxw.onmessenger.models.User;
 import com.jxw.onmessenger.services.FirebaseService;
+import com.jxw.onmessenger.utils.Redirection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +26,18 @@ class GroupChatPresenter {
     private GroupChatView groupChatView;
     private DatabaseReference fbRootRef;
     private FirebaseAuth fbAuth;
+    private Context context;
+    private SharedPreferences localStore;
 
 
     GroupChatPresenter(GroupChatView view) {
         this.groupChatView = view;
+        this.context = (Context) view;
         this.fbRootRef = FirebaseService.getFbRootRef();
         this.fbAuth = FirebaseService.getFbAuthService();
+
+        Activity activity = (Activity) context;
+        localStore = activity.getSharedPreferences(activity.getString(R.string.share_pref_key), Context.MODE_PRIVATE);
     }
 
     void fetchGroupChats(String chatId) {
@@ -53,15 +64,17 @@ class GroupChatPresenter {
             });
         } else {
             // send user to login
+            Redirection.sendUserToLogin(context);
         }
     }
 
     void sendMessage(String message, String groupId) {
         if (fbAuth.getCurrentUser() != null) {
             FirebaseUser currentUser = fbAuth.getCurrentUser();
+            String username = localStore.getString("username", "");
 
             String newMessageKey = fbRootRef.child("Messages").child(groupId).push().getKey();
-            User user = new User(currentUser.getUid(), currentUser.getEmail(), null, null);
+            User user = new User(currentUser.getUid(), username, null, null);
 
             Message newMessage = new Message(newMessageKey, groupId, message, user);
             fbRootRef.child("Messages").child(groupId).child(newMessageKey).setValue(newMessage)

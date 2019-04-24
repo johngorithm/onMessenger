@@ -21,7 +21,8 @@ public class GroupChatAdapter  extends RecyclerView.Adapter<GroupChatAdapter.Cha
     private Context context;
     private List<Message> messages;
 
-    public GroupChatAdapter(Context context, List<Message> messages) {
+
+    GroupChatAdapter(Context context, List<Message> messages) {
         this.context = context;
         this.messages = messages;
     }

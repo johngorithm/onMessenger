@@ -28,15 +28,15 @@ public class SettingsPresenter {
     /**
      * Constructor.
      */
-    public SettingsPresenter(SettingsView view) {
+    SettingsPresenter(SettingsView view) {
         this.settingsView = view;
-        context = (Context) settingsView;
+        context = (Context) view;
         fbRootRef = FirebaseService.getFbRootRef();
         firebaseAuth = FirebaseService.getFbAuthService();
         currentUser = firebaseAuth.getCurrentUser();
     }
 
-    public void fetchProfile() {
+    void fetchProfile() {
         if (currentUser != null) {
             String currentUserId = currentUser.getUid();
             fbRootRef.child("Users").child(currentUserId).addValueEventListener(new ValueEventListener() {
@@ -63,7 +63,7 @@ public class SettingsPresenter {
         }
     }
 
-    public void updateProfile(String username, @Nullable String status, @Nullable String displayPicture) {
+    void updateProfile(String username, @Nullable String status, @Nullable String displayPicture) {
 
         if (currentUser != null) {
             String userId = currentUser.getUid();
