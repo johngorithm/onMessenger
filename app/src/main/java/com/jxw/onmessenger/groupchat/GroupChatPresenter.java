@@ -83,7 +83,7 @@ class GroupChatPresenter {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 ///
-                            } else if (task.getException() != null){
+                            } else if (task.getException() != null) {
                                 // tell user to resend message
                                 String errMsg = task.getException().getMessage();
                                 groupChatView.handNetworkError(errMsg);
@@ -93,6 +93,9 @@ class GroupChatPresenter {
                             }
                         }
                     });
+        } else {
+            // send user to login
+            Redirection.sendUserToLogin(context);
         }
     }
 }
