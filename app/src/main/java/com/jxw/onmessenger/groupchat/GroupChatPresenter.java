@@ -4,23 +4,25 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.jxw.onmessenger.R;
 import com.jxw.onmessenger.models.Message;
 import com.jxw.onmessenger.models.User;
 import com.jxw.onmessenger.services.FirebaseService;
 import com.jxw.onmessenger.utils.Redirection;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 class GroupChatPresenter {
     private GroupChatView groupChatView;
@@ -44,16 +46,33 @@ class GroupChatPresenter {
         if (fbAuth.getCurrentUser() != null) {
             String currentUserId = fbAuth.getCurrentUser().getUid();
 
-            fbRootRef.child("Messages").child(chatId).addValueEventListener(new ValueEventListener() {
+            fbRootRef.child("Messages").child(chatId).addChildEventListener(new ChildEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    List<Message> messages = new ArrayList<>();
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    Log.d(TAG, "onChildAdded: " + dataSnapshot.toString());
+                    Message message = dataSnapshot.getValue(Message.class);
+                    groupChatView.displayMessage(message);
+                }
 
-                    for (DataSnapshot dataShot : dataSnapshot.getChildren()) {
-                        Message message = dataShot.getValue(Message.class);
-                        messages.add(message);
-                    }
-                    groupChatView.displayGroupChats(messages);
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    /**
+                     * To be implemented when message update operation is in place.
+                     */
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                    /**
+                     * To be implemented when message delete operation is in place.
+                     */
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    /**
+                     * To be implemented when message move operation is in place.
+                     */
                 }
 
                 @Override

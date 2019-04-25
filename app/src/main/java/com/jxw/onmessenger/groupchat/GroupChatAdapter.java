@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -19,17 +18,17 @@ import com.jxw.onmessenger.models.User;
 import com.jxw.onmessenger.services.FirebaseService;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class GroupChatAdapter  extends RecyclerView.Adapter<GroupChatAdapter.ChatViewHolder> {
     private Context context;
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
 
-    GroupChatAdapter(Context context, List<Message> messages) {
+    GroupChatAdapter(Context context) {
         this.context = context;
-        this.messages = messages;
     }
 
     @NonNull
@@ -51,9 +50,9 @@ public class GroupChatAdapter  extends RecyclerView.Adapter<GroupChatAdapter.Cha
 
         String senderUsername = sender.getUsername();
         if (currentUser != null && (currentUser.getUid()).equals(sender.getUid())) {
-            holder.chatItemLayout.setGravity(Gravity.RIGHT);
+            holder.chatItemLayout.setGravity(Gravity.END);
         } else {
-            holder.chatItemLayout.setGravity(Gravity.LEFT);
+            holder.chatItemLayout.setGravity(Gravity.START);
         }
         
 
@@ -93,5 +92,10 @@ public class GroupChatAdapter  extends RecyclerView.Adapter<GroupChatAdapter.Cha
             chatSender = itemView.findViewById(R.id.chat_sender);
             chatTimeStamp = itemView.findViewById(R.id.chat_time_stamp);
         }
+    }
+
+    public void setMessage(Message message) {
+        messages.add(message);
+        notifyItemInserted(messages.size());
     }
 }

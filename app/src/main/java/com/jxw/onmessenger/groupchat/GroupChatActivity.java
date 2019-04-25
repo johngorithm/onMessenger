@@ -1,13 +1,14 @@
 package com.jxw.onmessenger.groupchat;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,7 +17,6 @@ import android.widget.Toast;
 import com.jxw.onmessenger.R;
 import com.jxw.onmessenger.models.Message;
 
-import java.util.List;
 
 public class GroupChatActivity extends AppCompatActivity implements GroupChatView {
     private Toolbar groupChatToolbar;
@@ -27,6 +27,8 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatVie
     private GroupChatPresenter groupChatPresenter;
     private String groupId;
     private ProgressDialog progressDialog;
+
+    private GroupChatAdapter adapter;
 
     private View.OnClickListener sendBtnClickListener = new View.OnClickListener() {
         @Override
@@ -51,7 +53,6 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatVie
     }
 
     private void initiateNetworkRequest() {
-        progressDialog.setMessage("Fetching Chats");
         groupChatPresenter.fetchGroupChats(groupId);
     }
 
@@ -84,23 +85,23 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatVie
         // ProgressDialog
         progressDialog = new ProgressDialog(this);
         progressDialog.setCanceledOnTouchOutside(false);
+
+        adapter = new GroupChatAdapter(this);
+        groupChatRecyclerView.setAdapter(adapter);
     }
 
     @Override
     public void handNetworkError(String message) {
-        progressDialog.dismiss();
-
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void displayGroupChats(List<Message> messages) {
-        progressDialog.dismiss();
-
-        if (messages != null && !messages.isEmpty() ) {
-            GroupChatAdapter adapter = new GroupChatAdapter(this, messages);
-            groupChatRecyclerView.setAdapter(adapter);
-        } else {
-            Log.d("GROUP_CHAT_ACTIVITY", "displayGroupChats: "+messages);
+    public void displayMessage(Message message) {
+        SharedPreferences localStore = getSharedPreferences(getString(R.string.share_pref_key), Context.MODE_PRIVATE);
+        String username = localStore.getString("username", "");
+        adapter.setMessage(message);
+        if ((groupChatRecyclerView.getAdapter() != null) && username.equals(message.getSender().getUsername())) {
+            groupChatRecyclerView.smoothScrollToPosition(groupChatRecyclerView.getAdapter().getItemCount());
         }
     }
 }
