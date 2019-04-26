@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.jxw.onmessenger.home.views.MainActivity;
 import com.jxw.onmessenger.R;
+import com.jxw.onmessenger.login.phone_login.PhoneLoginActivity;
 import com.jxw.onmessenger.register.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginView {
@@ -42,6 +43,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         initializeFields();
         notRegisteredLink.setOnClickListener(view -> sendUserToRegisterActivity());
         loginButton.setOnClickListener(loginClickListener);
+        phoneLoginButton.setOnClickListener(view -> goToPhoneLogin());
+    }
+
+    private void goToPhoneLogin() {
+        Intent phoneAuthActivityIntent = new Intent(LoginActivity.this, PhoneLoginActivity.class);
+        startActivity(phoneAuthActivityIntent);
     }
 
     private void loginUser(String email, String password) {
@@ -52,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         loginPresenter.authenticateUser(email, password);
     }
 
-    private void gotToMainActivity() {
+    private void goToMainActivity() {
         Intent mainActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
         mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainActivityIntent);
@@ -86,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         progressDialog.dismiss();
         Toast.makeText(LoginActivity.this,
                 "Login Successful", Toast.LENGTH_SHORT).show();
-        gotToMainActivity();
+        goToMainActivity();
     }
 
     @Override

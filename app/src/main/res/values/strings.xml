@@ -15,4 +15,15 @@
     <string name="sender_text">Deraviv</string>
     <string name="message_text">Hi John, This is the last time I want warn you</string>
     <string name="share_pref_key">SharePreferencesKey_78937</string>
+    <string name="enter_phone_number_hint">Enter phone number ...</string>
+    <string name="send_verification_code_btn_text">Send Verification Code</string>
+    <string name="prefer_email_login_text">Prefer email login ?</string>
+    <string name="company_footer_text">onMessenger 2019</string>
+    <string name="password_login_pw_hint">Password ...</string>
+    <string name="login_email_input_hint">Email ...</string>
+    <string name="verification_code_hint">- - - - - -</string>
+    <string name="enter_your_phone_number_text">Enter your phone number</string>
+    <string name="verify_button_text">verify</string>
+    <string name="phone_number_hint">e.g 08189348939</string>
+    <string name="verify_code_header_text">Enter Verification Code</string>
 </resources>

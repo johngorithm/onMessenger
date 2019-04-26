@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.phone_login.PhoneLoginActivity">
+
+    <ImageView
+        android:id="@+id/phone_auth_banner"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/signup_photo"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"/>
+    <View
+        android:layout_width="match_parent"
+        android:background="#80000000"
+        android:layout_height="300dp">
+    </View>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_marginTop="130dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        />
+
+    <TextView
+        android:id="@+id/enter_phone_number_hint_text"
+        android:text="@string/enter_your_phone_number_text"
+        android:textColor="@android:color/white"
+        android:textSize="23sp"
+        android:gravity="center"
+        android:layout_marginTop="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/phone_inputs_container"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="270dp"
+        android:visibility="visible"
+        >
+
+        <Spinner
+            android:id="@+id/country_code_spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight=".3"
+            android:background="@drawable/spinner_bg"
+            android:layout_marginBottom="20dp"
+            android:elevation="10dp" />
+
+        <EditText
+            android:id="@+id/phone_number_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/phone_input_bg"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:textSize="25sp"
+            android:layout_weight=".7"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="20dp"
+            android:inputType="phone"
+            android:hint="@string/phone_number_hint"
+            android:elevation="10dp"
+            android:layout_marginBottom="20dp"
+            android:digits="0123456789"
+            android:maxLength="12"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="20dp" />
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/verification_code_input"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/phone_input_bg"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:textSize="25sp"
+        android:layout_marginTop="270dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="@string/verification_code_hint"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
+        android:inputType="number"
+        android:visibility="invisible"
+        android:elevation="10dp"/>
+
+
+    <Button
+        android:id="@+id/send_phone_verification_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/send_verification_code_btn_text"
+        android:textSize="20sp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:background="@drawable/buttons"
+        android:visibility="visible"
+        android:layout_below="@+id/phone_inputs_container"
+        />
+
+    <Button
+        android:id="@+id/verify_auth_code_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/verify_button_text"
+        android:textSize="20sp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:background="@drawable/buttons"
+        android:layout_below="@+id/phone_inputs_container"
+        android:visibility="invisible"
+        />
+    <TextView
+        android:id="@+id/prefer_email_login_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textSize="17sp"
+        android:layout_below="@+id/send_phone_verification_button"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="@string/prefer_email_login_text"
+        />
+
+    <TextView
+        android:id="@+id/phone_auth_footer_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textSize="15sp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:text="@string/company_footer_text"
+        />
+
+</RelativeLayout>

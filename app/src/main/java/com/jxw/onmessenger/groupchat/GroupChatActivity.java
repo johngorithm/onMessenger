@@ -1,6 +1,5 @@
 package com.jxw.onmessenger.groupchat;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -19,14 +18,12 @@ import com.jxw.onmessenger.models.Message;
 
 
 public class GroupChatActivity extends AppCompatActivity implements GroupChatView {
-    private Toolbar groupChatToolbar;
     private ImageButton sendBtn;
     private EditText messageInputField;
 
     private RecyclerView groupChatRecyclerView;
     private GroupChatPresenter groupChatPresenter;
     private String groupId;
-    private ProgressDialog progressDialog;
 
     private GroupChatAdapter adapter;
 
@@ -57,7 +54,7 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatVie
     }
 
     private void initializeProperties() {
-        groupChatToolbar = findViewById(R.id.group_chat_bar_layout);
+        Toolbar groupChatToolbar = findViewById(R.id.group_chat_bar_layout);
         sendBtn = findViewById(R.id.group_chat_send_button);
         messageInputField = findViewById(R.id.group_chat_input_field);
         groupChatRecyclerView = findViewById(R.id.group_chat_recycler_view);
@@ -79,13 +76,10 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatVie
 
         // PRESENTER
         groupChatPresenter = new GroupChatPresenter(this);
-        // Adapter
+        // LAYOUT MANAGER
         LinearLayoutManager mlayoutManager = new LinearLayoutManager(this);
         groupChatRecyclerView.setLayoutManager(mlayoutManager);
-        // ProgressDialog
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCanceledOnTouchOutside(false);
-
+        // ADAPTER
         adapter = new GroupChatAdapter(this);
         groupChatRecyclerView.setAdapter(adapter);
     }
@@ -102,6 +96,10 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatVie
         adapter.setMessage(message);
         if ((groupChatRecyclerView.getAdapter() != null) && username.equals(message.getSender().getUsername())) {
             groupChatRecyclerView.smoothScrollToPosition(groupChatRecyclerView.getAdapter().getItemCount());
+        } else {
+            /**
+             * Notify user to scroll to the bottom to see new messages.
+             */
         }
     }
 }
