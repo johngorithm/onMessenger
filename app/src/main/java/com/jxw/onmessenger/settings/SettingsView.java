@@ -6,4 +6,5 @@ public interface SettingsView {
     void handleError(String message);
     void onFetchProfileSuccess(User user);
     void onUpdateProfileSuccess();
+    void handleProfileImageUpdateSuccess(String imgUrl);
 }

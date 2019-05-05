@@ -12,25 +12,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.bumptech.glide.Glide;
 import com.jxw.onmessenger.home.views.MainActivity;
 import com.jxw.onmessenger.R;
 import com.jxw.onmessenger.models.User;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class SettingsActivity extends AppCompatActivity implements SettingsView{
     private Button updateButton;
     private EditText statusInput, usernameInput;
-    // profileImage field expected
+    private CircleImageView profileImage;
 
-    private DatabaseReference fbRootRef;
-    private FirebaseUser currentUser;
     private ProgressDialog progressDialog;
 
     private SettingsPresenter settingsPresenter;
+    private static final int GALLERY_CODE = 1;
 
     View.OnClickListener profileUpdateClickListener = view -> {
         String username = usernameInput.getText().toString();
@@ -51,10 +49,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
-        fbRootRef = FirebaseDatabase.getInstance().getReference();
-
         Toolbar appToolbar = findViewById(R.id.settings_app_bar);
         setSupportActionBar(appToolbar);
         getSupportActionBar().setTitle("Settings");
@@ -62,10 +56,16 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
 
         initializeFields();
         updateButton.setOnClickListener(profileUpdateClickListener);
+        profileImage.setOnClickListener(view -> selectImage());
 
         fetchProfileData();
     }
 
+    private void selectImage() {
+        Intent galleryIntent = new Intent();
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT).setType("image/*");
+        startActivityForResult(galleryIntent, GALLERY_CODE);
+    }
 
 
     private void fetchProfileData() {
@@ -94,6 +94,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         updateButton = findViewById(R.id.update_profile_btn);
         usernameInput = findViewById(R.id.username_input);
         statusInput = findViewById(R.id.status_input);
+        profileImage = findViewById(R.id.profile_image);
 
         progressDialog = new ProgressDialog(SettingsActivity.this);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -102,16 +103,38 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_CODE && resultCode == RESULT_OK && data != null) {
+            progressDialog.setMessage("Updating display picture ...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+            settingsPresenter.saveProfileImage(data.getData());
+        } else {
+            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
     public void handleError(String message) {
         progressDialog.dismiss();
         Toast.makeText(SettingsActivity.this, message, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
     public void onFetchProfileSuccess(User user) {
         usernameInput.setText(user.getUsername());
         statusInput.setText(user.getStatusInfo());
+        String displayImage = user.getDisplayPicture();
+
+        if (displayImage != null && !displayImage.isEmpty()) {
+            Glide.with(this)
+                    .asBitmap()
+                    .load(user.getDisplayPicture())
+                    .into(profileImage);
+        }
+
         progressDialog.dismiss();
     }
 
@@ -121,6 +144,18 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         Toast.makeText(SettingsActivity.this, "Update is successful", Toast.LENGTH_SHORT).show();
         if (getIntent().getFlags() == Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_NEW_TASK){
             goToMainActivity();
+        }
+    }
+
+    @Override
+    public void handleProfileImageUpdateSuccess(String imgUrl) {
+        progressDialog.dismiss();
+        // TODO: prevent from crashing if activity isDestroyed
+        if (imgUrl != null && !imgUrl.isEmpty()) {
+            Glide.with(this)
+                    .asBitmap()
+                    .load(imgUrl)
+                    .into(profileImage);
         }
     }
 }
