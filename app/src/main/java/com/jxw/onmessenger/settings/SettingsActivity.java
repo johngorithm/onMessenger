@@ -26,7 +26,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
     private CircleImageView profileImage;
 
     private ProgressDialog progressDialog;
-
     private SettingsPresenter settingsPresenter;
     private static final int GALLERY_CODE = 1;
 

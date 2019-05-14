@@ -26,4 +26,6 @@
     <string name="verify_button_text">verify</string>
     <string name="phone_number_hint">e.g 08189348939</string>
     <string name="verify_code_header_text">Enter Verification Code</string>
+    <string name="ff_username_sample">Johngorithm</string>
+    <string name="ff_status_sample">Coding and loving it</string>
 </resources>

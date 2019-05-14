@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".login.phone_login.PhoneLoginActivity"></activity>
+        <activity
+            android:name=".find_friends.FindFriendsActivity"
+            android:parentActivityName=".home.views.MainActivity" />
+        <activity android:name=".login.phone_login.PhoneLoginActivity" />
         <activity android:name=".groupchat.GroupChatActivity" />
         <activity
             android:name=".settings.SettingsActivity"

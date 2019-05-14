@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hbb20.GThumb;
 import com.jxw.onmessenger.R;
 import com.jxw.onmessenger.groupchat.GroupChatActivity;
 import com.jxw.onmessenger.models.Group;
@@ -21,7 +22,7 @@ public class GroupAdapter  extends RecyclerView.Adapter<GroupAdapter.GroupViewHo
     private Context context;
     private List<Group> groups;
 
-    public GroupAdapter(Context context, List<Group> groups) {
+    GroupAdapter(Context context, List<Group> groups) {
         this.context = context;
         this.groups = groups;
     }
@@ -49,6 +50,8 @@ public class GroupAdapter  extends RecyclerView.Adapter<GroupAdapter.GroupViewHo
             groupActivityIntent.putExtra("group_name", groupName);
                 context.startActivity(groupActivityIntent);
             });
+
+        groupViewHolder.displayImage.loadThumbForName(group.getImageUrl(), groupName);
     }
 
     @Override
@@ -59,10 +62,12 @@ public class GroupAdapter  extends RecyclerView.Adapter<GroupAdapter.GroupViewHo
     class GroupViewHolder extends RecyclerView.ViewHolder {
         CardView groupItemCard;
         TextView groupName;
+        GThumb displayImage;
 
         GroupViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            displayImage = itemView.findViewById(R.id.group_dp_gthumb);
             groupItemCard = itemView.findViewById(R.id.list_item_group_card);
             groupName = itemView.findViewById(R.id.list_item_group_name);
         }

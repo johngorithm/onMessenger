@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="5dp"
+    android:padding="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="horizontal">
+
+            <com.hbb20.GThumb
+                android:layout_weight="0"
+                android:id="@+id/ff_gthumb"
+                android:layout_width="70dp"
+                android:layout_height="70dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ff_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/ff_username_sample" />
+
+                <TextView
+                    android:id="@+id/ff_user_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/ff_status_sample" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ff_isOnline_icon"
+                android:layout_width="14dp"
+                android:background="@drawable/is_online_icon_bg"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:layout_marginRight="8dp"
+                android:layout_height="14dp"
+                android:layout_marginEnd="8dp" />
+        </LinearLayout>
+</android.support.v7.widget.CardView>

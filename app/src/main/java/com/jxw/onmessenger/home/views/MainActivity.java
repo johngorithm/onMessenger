@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import com.jxw.onmessenger.R;
+import com.jxw.onmessenger.find_friends.FindFriendsActivity;
 import com.jxw.onmessenger.home.HomePresenter;
 import com.jxw.onmessenger.home.HomeView;
 import com.jxw.onmessenger.home.adapters.TabAccessAdapter;
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements HomeView {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.option_find_friends:
-                Toast.makeText(this, "Find Friends", Toast.LENGTH_SHORT).show();
+                launchFindFriendActivity();
                 return true;
             case R.id.option_settings:
                 launchSettingsActivity();
@@ -162,6 +163,11 @@ public class MainActivity extends AppCompatActivity implements HomeView {
             default:
                 return false;
         }
+    }
+
+    private void launchFindFriendActivity() {
+        Intent ffIntent = new Intent(MainActivity.this, FindFriendsActivity.class);
+        startActivity(ffIntent);
     }
 
     private void signOut() {
